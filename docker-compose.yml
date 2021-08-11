@@ -1,4 +1,6 @@
 # from Dockerfile
+# -> make image froim file Dockerfile
+# docker build -t myphp/7.4-xmr-apache --build-arg USER_ID=$(id -u) .
 # -> run image to container
 # docker run -it --name mywebserver -p 8888:80 -h firstserver myphp/7.4-xmr-apache
 # -> run bash on container name
