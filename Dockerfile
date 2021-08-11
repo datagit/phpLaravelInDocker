@@ -1,5 +1,5 @@
-# docker build -t myphp:2 --build-arg USER_ID=$(id -u) .
-# docker build -t myphp:2 --build-arg USER_ID=$(id -u) --force-rm -f Dockerfile .
+# docker build -t myphp/7.4-xmr-apache --build-arg USER_ID=$(id -u) .
+# docker build -t myphp/7.4-xmr-apache --build-arg USER_ID=$(id -u) --force-rm -f Dockerfile .
 # docker build -t getjv/php-apache --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) .
 FROM php:7.4-apache
 
