@@ -1,19 +1,18 @@
 # docker build -t myphp:2 --build-arg USER_ID=$(id -u) .
+# docker build -t myphp:2 --build-arg USER_ID=$(id -u) --force-rm -f Dockerfile .
 # docker build -t getjv/php-apache --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) .
 FROM php:7.4-apache
 
 #MAINTAINER Jhonatan Morais <jhonatanvinicius@gmail.com>
 
-# docker build -t myphpimage:1 --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -f Dockerfile .
-# docker build -t myphpimage:1 --force-rm -f Dockerfile .
 # https://vsupalov.com/docker-shared-permissions/
-ARG USER_ID
 # ARG GROUP_ID
 # RUN addgroup --gid $GROUP_ID developer
 # RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID developer
+ARG USER_ID
 RUN adduser --disabled-password --gecos '' --uid $USER_ID developer
 
-# Update system 
+# Update system
 RUN apt-get update && \
     apt-get upgrade -y
 
@@ -32,17 +31,18 @@ RUN apt-get install -y nano wget unzip git
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
 	php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
-#Instalação do php-zip
+# Install do php-zip
 RUN apt-get install -y libzip-dev zip && \
     docker-php-ext-install zip
 
-# Instalação do mysql
+# Install do mysql
 RUN docker-php-ext-install mysqli pdo_mysql
 
 # Install Mongo DB
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
 
+# Install redis
 RUN echo '' | pecl install redis
 RUN docker-php-ext-enable redis
 
@@ -74,27 +74,27 @@ USER developer
 #Instalação laravel
 RUN composer global require laravel/installer && \
 	echo "alias laravel='~/.composer/vendor/bin/laravel'" >> ~/.bashrc && \
-	alias laravel='~/.composer/vendor/bin/laravel' 
+	alias laravel='~/.composer/vendor/bin/laravel'
 
 USER root
 
-    
-#Instalação do php-ldap
-#RUN apt-get install libldap2-dev -y && \ 
+
+# Install do php-ldap
+#RUN apt-get install libldap2-dev -y && \
 #    docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
 #    docker-php-ext-install ldap
 
-# Instalação do php-pgsql
+# Install do php-pgsql
 #RUN apt-get install libpq-dev -y && \
 #    docker-php-ext-install pdo_pgsql
 
-# instalação do GD
+# Install do GD
 #RUN apt-get install libpng-dev  -y && \
 #    docker-php-ext-install gd
 
 
 #https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-debian-10-pt
-#Configuração de SSL Gerado em 30/05/2020 
+#Configuração de SSL Gerado em 30/05/2020
 #ADD apache-selfsigned.key /etc/ssl/private/apache-selfsigned.key
 #ADD apache-selfsigned.crt /etc/ssl/certs/apache-selfsigned.crt
 #ADD ssl-params.conf /etc/apache2/conf-available/ssl-params.conf
