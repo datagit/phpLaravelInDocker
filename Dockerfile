@@ -38,6 +38,7 @@ RUN apt-get install -y libzip-dev zip && \
 # Install do mysql
 RUN docker-php-ext-install mysqli pdo_mysql
 
+# https://github.com/dieepak/php7.2-apache-mysql-mongo-redis/blob/master/.docker/Dockerfile
 # Install Mongo DB
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb

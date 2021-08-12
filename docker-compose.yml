@@ -1,4 +1,4 @@
-# from Dockerfile
+# -> from Dockerfile: https://docs.docker.com/compose/compose-file/compose-file-v3/
 # -> make image froim file Dockerfile
 # docker build -t myphp/7.4-xmr-apache --build-arg USER_ID=$(id -u) .
 # -> run image to container
