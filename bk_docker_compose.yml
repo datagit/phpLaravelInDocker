@@ -11,6 +11,24 @@
 
 version: "3"
 services:
+  redis:
+    image: redis:alpine
+    restart: "always"
+    container_name: redis
+    ports:
+      - "6389:6379"
+    networks:
+      - app-network
+  mongodb:
+    image: mongo
+    restart: "always"
+    container_name: mongodb
+    volumes:
+      - .:/var/www/html
+    ports:
+      - '27037:27017'
+    networks:
+      - app-network
   backend:
     container_name: backend
     # image name was push on docker hub
